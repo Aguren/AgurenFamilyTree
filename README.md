@@ -47,3 +47,17 @@ Aguren's immediate family is now included in both the paternal and maternal view
 - Athen Balkov — son
 
 Aguren and Courtney are shown as a couple with Athen connected beneath them.
+
+
+## v7.3 expanding-tree layout
+- The large white family-tree box now grows to the actual width of the family tree.
+- Branches no longer hang outside the white container.
+- Desktop cards are slightly wider and branch spacing is increased for readability.
+- The page itself can grow on very wide family trees rather than squeezing or clipping the chart.
+- At 1200px and below, the site still switches to the vertical mobile/tablet layout with ordinary page scrolling.
+
+
+## v7.3 dynamic white-panel sizing
+The desktop tree now measures the actual rendered family structure after every render and browser resize.
+The white tree panel expands around the widest family branch instead of letting cards hang outside it.
+Tree height remains content-driven, so adding children/grandchildren also increases the panel height automatically.

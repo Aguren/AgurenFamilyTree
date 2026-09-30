@@ -20,7 +20,8 @@ body{
 button,input,textarea{font:inherit}
 button{cursor:pointer}
 .site-header{background:#fff;border-bottom:1px solid var(--soft-line);padding:16px 20px 28px}
-.language,.intro,.family-tabs,.tree-section,.add-missing{max-width:1280px;margin-left:auto;margin-right:auto}
+.language,.intro,.family-tabs,.add-missing{max-width:1280px;margin-left:auto;margin-right:auto}
+.tree-section{max-width:none;width:max-content;min-width:100%;margin-left:auto;margin-right:auto}
 .language-label{text-align:center;font-weight:850;margin-bottom:9px}
 .language-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:700px;margin:auto}
 .lang{border:2px solid #dce1e8;background:#fff;border-radius:13px;min-height:46px;font-weight:900}
@@ -39,13 +40,21 @@ button{cursor:pointer}
 .family-tab strong,.family-tab small{display:block}
 .family-tab small{color:var(--muted);margin-top:2px}
 .tree-section{padding:30px 20px 8px}
-.tree-title-row{text-align:center;margin-bottom:20px}
+.tree-title-row{text-align:center;margin:0 auto 20px;max-width:1280px;padding:0 20px}
 .eyebrow{text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-size:.76rem;font-weight:900}
 .tree-title-row h2{font-size:clamp(1.7rem,4vw,2.4rem);margin:.18rem 0 .35rem}
 .tree-title-row p{color:var(--muted);margin:0}
 .tree-wrap{
-  position:relative;background:#fff;border:1px solid var(--soft-line);border-radius:24px;
-  padding:30px 24px 40px;box-shadow:var(--shadow);overflow:visible
+  position:relative;
+  width:max-content;
+  min-width:calc(100vw - 40px);
+  margin:0 auto;
+  background:#fff;
+  border:1px solid var(--soft-line);
+  border-radius:24px;
+  padding:38px 34px 48px;
+  box-shadow:var(--shadow);
+  overflow:visible;
 }
 .tree-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
 #treeRoot{
@@ -53,7 +62,8 @@ button{cursor:pointer}
   z-index:1;
   display:flex;
   justify-content:center;
-  min-width:0;
+  width:max-content;
+  min-width:100%;
 }
 .family-unit{
   display:flex;
@@ -63,9 +73,9 @@ button{cursor:pointer}
   width:max-content;
   min-width:max-content;
 }
-.people-row{display:flex;justify-content:center;gap:8px;align-items:stretch}
+.people-row{display:flex;justify-content:center;gap:10px;align-items:stretch}
 .person-card{
-  width:150px;min-height:158px;border:1px solid #b9c2cd;border-radius:5px;
+  width:170px;min-height:166px;border:1px solid #b9c2cd;border-radius:5px;
   padding:10px;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.07);
   text-align:center;color:var(--ink);position:relative
 }
@@ -83,8 +93,8 @@ button{cursor:pointer}
 .person-alt{font-size:.7rem;color:#687386;margin-top:5px;line-height:1.18}
 .card-action{font-size:.69rem;color:#304a9c;margin-top:7px;font-weight:800}
 .children-row{
-  display:flex;align-items:flex-start;justify-content:center;gap:16px;
-  width:100%;margin-top:58px
+  display:flex;align-items:flex-start;justify-content:center;gap:24px;
+  width:100%;margin-top:64px
 }
 .child-unit{
   flex:0 0 auto;
@@ -138,7 +148,17 @@ label small{display:block;color:var(--muted);font-weight:500;margin-top:5px}
 
 /* Tablet / phone: normal page scroll, no nested horizontal scroll. */
 @media(max-width:1200px){
-  .tree-wrap{padding:24px 14px 32px}
+  .tree-section{
+    width:100%;
+    min-width:0;
+    max-width:100%;
+  }
+  .tree-wrap{
+    width:auto;
+    min-width:0;
+    margin:0;
+    padding:24px 14px 32px;
+  }
   .tree-lines{display:none}
   #treeRoot{display:block}
   .family-unit{
@@ -200,5 +220,50 @@ label small{display:block;color:var(--muted);font-weight:500;margin-top:5px}
   .people-row.couple-row .person-alt,
   .people-row.couple-row .card-action{
     grid-column:auto;
+  }
+}
+
+.person-card,
+.person-name,
+.person-relation,
+.person-alt{
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+
+@media(min-width:1201px){
+  body{
+    overflow-x:auto;
+  }
+  main{
+    width:max-content;
+    min-width:100%;
+  }
+  .add-missing{
+    width:100vw;
+    max-width:1280px;
+  }
+}
+
+
+/* v7.3 final containment pass:
+   the white "paper" follows the actual rendered family tree size. */
+@media(min-width:1201px){
+  .tree-section{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .tree-wrap{
+    box-sizing:border-box;
+  }
+
+  #treeRoot{
+    box-sizing:border-box;
+  }
+
+  #treeRoot > .family-unit{
+    margin-left:auto;
+    margin-right:auto;
   }
 }

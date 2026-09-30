@@ -90,10 +90,35 @@
     return wrapper;
   }
 
+  function sizeTreeContainer() {
+    const isMobileLayout = window.matchMedia("(max-width: 1200px)").matches;
+
+    if (isMobileLayout) {
+      treeWrap.style.width = "";
+      treeWrap.style.minWidth = "";
+      return;
+    }
+
+    const rootFamily = treeRoot.firstElementChild;
+    if (!rootFamily) return;
+
+    // Measure the actual family tree instead of relying on a fixed page width.
+    // The extra space becomes the white margin around the outermost family cards.
+    const treeWidth = Math.ceil(rootFamily.getBoundingClientRect().width);
+    const desiredWidth = Math.max(window.innerWidth - 40, treeWidth + 76);
+
+    treeWrap.style.width = desiredWidth + "px";
+    treeWrap.style.minWidth = desiredWidth + "px";
+  }
+
   function renderTree() {
     treeRoot.innerHTML = "";
     treeRoot.appendChild(renderUnit(DATA[currentTree].root));
-    requestAnimationFrame(() => requestAnimationFrame(drawLines));
+
+    requestAnimationFrame(() => {
+      sizeTreeContainer();
+      requestAnimationFrame(drawLines);
+    });
   }
 
   function drawLines() {
@@ -281,7 +306,12 @@
   document.querySelectorAll("[data-person-close]").forEach(el => el.addEventListener("click", closePerson));
   document.querySelectorAll("[data-form-close]").forEach(el => el.addEventListener("click", closeForm));
 
-  window.addEventListener("resize", () => requestAnimationFrame(drawLines));
+  window.addEventListener("resize", () => {
+    requestAnimationFrame(() => {
+      sizeTreeContainer();
+      requestAnimationFrame(drawLines);
+    });
+  });
 
   familyForm.addEventListener("submit", event => {
     event.preventDefault();
