@@ -61,3 +61,23 @@ Aguren and Courtney are shown as a couple with Athen connected beneath them.
 The desktop tree now measures the actual rendered family structure after every render and browser resize.
 The white tree panel expands around the widest family branch instead of letting cards hang outside it.
 Tree height remains content-driven, so adding children/grandchildren also increases the panel height automatically.
+
+
+## v7.4 dedicated phone layout
+Desktop and phone now use two separate presentations of the same family data.
+
+Desktop:
+- traditional genealogy chart
+- spouse connectors and parent/child lines
+- expanding white tree panel
+
+Phone/tablet:
+- no horizontal tree canvas
+- no sideways scrolling
+- normal page scrolling only
+- couples stay visually paired
+- descendants are nested underneath with simple branch lines
+- larger tap targets
+- every person opens the same add/correct/relative/photo actions
+
+The underlying family data remains in `tree-data.js`, so edits update both desktop and mobile views automatically.

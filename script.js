@@ -8,6 +8,7 @@
   if (!["en","bg","tr"].includes(lang)) lang = "en";
 
   const treeRoot = document.getElementById("treeRoot");
+  const mobileTreeRoot = document.getElementById("mobileTreeRoot");
   const treeWrap = document.getElementById("treeWrap");
   const linesSvg = document.getElementById("treeLines");
 
@@ -91,7 +92,7 @@
   }
 
   function sizeTreeContainer() {
-    const isMobileLayout = window.matchMedia("(max-width: 1200px)").matches;
+    const isMobileLayout = window.matchMedia("(max-width: 900px)").matches;
 
     if (isMobileLayout) {
       treeWrap.style.width = "";
@@ -111,9 +112,61 @@
     treeWrap.style.minWidth = desiredWidth + "px";
   }
 
+
+  function mobilePersonCard(personId) {
+    const p = DATA.people[personId];
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `mobile-person ${p.sex || ""}`;
+    btn.innerHTML = `
+      <div class="mobile-avatar">${p.photo ? `<img src="${escapeHtml(p.photo)}" alt="">` : (p.sex === "f" ? "👩" : "👨")}</div>
+      <div>
+        <div class="mobile-person-name">${escapeHtml(p.name)}</div>
+        ${getDates(p) ? `<div class="mobile-person-dates">${escapeHtml(getDates(p))}</div>` : ""}
+        <div class="mobile-person-relation">${escapeHtml(t(p.relation))}</div>
+        <div class="mobile-person-action">＋ ${escapeHtml(t("details"))}</div>
+      </div>
+      ${p.alt ? `<div class="mobile-alt">${escapeHtml(phrase(p.alt))}</div>` : ""}
+    `;
+    btn.addEventListener("click", () => openPerson(personId));
+    return btn;
+  }
+
+  function renderMobileUnit(unit, depth = 0) {
+    const block = document.createElement("div");
+    block.className = depth === 0 ? "mobile-family-block" : "mobile-child";
+
+    const couple = document.createElement("div");
+    couple.className = unit.people.length > 1 ? "mobile-couple" : "mobile-couple single";
+    unit.people.forEach(id => couple.appendChild(mobilePersonCard(id)));
+    block.appendChild(couple);
+
+    if (unit.children && unit.children.length) {
+      const descendants = document.createElement("div");
+      descendants.className = "mobile-descendants";
+
+      unit.children.forEach(child => {
+        descendants.appendChild(renderMobileUnit(child, depth + 1));
+      });
+
+      block.appendChild(descendants);
+    }
+
+    return block;
+  }
+
+  function renderMobileTree() {
+    mobileTreeRoot.innerHTML = "";
+    const root = document.createElement("div");
+    root.className = "mobile-family-root";
+    root.appendChild(renderMobileUnit(DATA[currentTree].root, 0));
+    mobileTreeRoot.appendChild(root);
+  }
+
   function renderTree() {
     treeRoot.innerHTML = "";
     treeRoot.appendChild(renderUnit(DATA[currentTree].root));
+    renderMobileTree();
 
     requestAnimationFrame(() => {
       sizeTreeContainer();
@@ -122,7 +175,7 @@
   }
 
   function drawLines() {
-    if (window.matchMedia("(max-width: 1200px)").matches) {
+    if (window.matchMedia("(max-width: 900px)").matches) {
       linesSvg.innerHTML = "";
       return;
     }

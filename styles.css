@@ -146,124 +146,333 @@ label small{display:block;color:var(--muted);font-weight:500;margin-top:5px}
 .prepare-email{width:100%;margin-top:7px}
 .message{text-align:center;color:var(--muted);font-size:.9rem}
 
-/* Tablet / phone: normal page scroll, no nested horizontal scroll. */
-@media(max-width:1200px){
-  .tree-section{
-    width:100%;
-    min-width:0;
-    max-width:100%;
-  }
-  .tree-wrap{
-    width:auto;
-    min-width:0;
-    margin:0;
-    padding:24px 14px 32px;
-  }
-  .tree-lines{display:none}
-  #treeRoot{display:block}
-  .family-unit{
-    align-items:stretch;
-    width:100%;
-    min-width:0;
-  }
-  .people-row{justify-content:center;flex-wrap:wrap}
-  .person-card{width:min(100%,220px)}
-  .children-row{
-    flex-direction:column;align-items:stretch;gap:16px;margin-top:26px;
-    border-left:3px solid #bcc5d0;padding-left:22px;margin-left:20px;width:auto
-  }
-  .child-unit{
-    position:relative;
-    width:100%;
-    min-width:0;
-  }
-  .child-unit::before{
-    content:"";position:absolute;left:-22px;top:34px;width:20px;border-top:3px solid #bcc5d0
-  }
-  .child-unit .children-row{margin-left:18px}
-}
-@media(max-width:650px){
-  .site-header{padding-left:14px;padding-right:14px}
-  .tree-section{padding-left:10px;padding-right:10px}
-  .family-tabs{grid-template-columns:1fr}
-  .language-buttons{gap:6px}
-  .lang{font-size:.92rem}
-  .tree-wrap{border-radius:18px}
-  .people-row{gap:6px}
-  .person-card{width:100%;min-height:142px;display:grid;grid-template-columns:66px 1fr;grid-template-rows:auto;column-gap:10px;text-align:left}
-  .photo-box{grid-row:1/6;width:62px;height:62px;margin:0}
-  .person-name{font-size:1.04rem}
-  .person-dates,.person-relation,.person-alt,.card-action{grid-column:2}
-  .action-grid,.info-grid,.two-col{grid-template-columns:1fr}
+
+/* Dedicated mobile family view */
+.mobile-tree{
+  display:none;
 }
 
-@media(max-width:650px){
-  .people-row.couple-row{
+@media(max-width:900px){
+  body{
+    overflow-x:hidden;
+  }
+
+  .site-header{
+    padding:12px 12px 20px;
+  }
+
+  .language-buttons{
+    gap:6px;
+  }
+
+  .lang{
+    min-height:44px;
+    font-size:.92rem;
+    padding:6px;
+  }
+
+  .intro{
+    margin-top:18px;
+  }
+
+  .intro h1{
+    font-size:2rem;
+  }
+
+  .intro p{
+    font-size:.96rem;
+    line-height:1.4;
+  }
+
+  .family-tabs{
+    grid-template-columns:1fr;
+    gap:8px;
+    margin-top:18px;
+  }
+
+  .family-tab{
+    min-height:62px;
+    padding:11px 13px;
+  }
+
+  .tree-section{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    padding:22px 10px 8px;
+  }
+
+  .tree-title-row{
+    padding:0 6px;
+    margin-bottom:14px;
+  }
+
+  .tree-title-row h2{
+    font-size:1.6rem;
+  }
+
+  .tree-title-row p{
+    font-size:.9rem;
+  }
+
+  .desktop-tree{
+    display:none !important;
+  }
+
+  .mobile-tree{
+    display:block;
+    width:100%;
+  }
+
+  .mobile-family-root{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .mobile-family-block{
+    background:#fff;
+    border:1px solid var(--soft-line);
+    border-radius:18px;
+    padding:14px;
+    box-shadow:var(--shadow);
+  }
+
+  .mobile-generation-label{
+    font-size:.72rem;
+    font-weight:900;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 9px 2px;
+  }
+
+  .mobile-couple{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:6px;
-    align-items:stretch;
+    gap:8px;
+    position:relative;
   }
-  .people-row.couple-row .person-card{
+
+  .mobile-couple::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:8px;
+    border-top:2px solid #aab3c0;
+    transform:translate(-50%,-50%);
+    z-index:0;
+  }
+
+  .mobile-couple.single{
+    grid-template-columns:1fr;
+  }
+
+  .mobile-couple.single::after{
+    display:none;
+  }
+
+  .mobile-person{
+    position:relative;
+    z-index:1;
     width:100%;
-    display:block;
-    text-align:center;
-    min-height:150px;
+    border:1px solid #bbc4cf;
+    border-radius:14px;
+    padding:10px;
+    text-align:left;
+    display:grid;
+    grid-template-columns:50px 1fr;
+    gap:9px;
+    align-items:center;
+    min-height:78px;
+    color:var(--ink);
+    background:#fff;
   }
-  .people-row.couple-row .photo-box{
-    width:54px;
-    height:54px;
-    margin:0 auto 7px;
-  }
-  .people-row.couple-row .person-dates,
-  .people-row.couple-row .person-relation,
-  .people-row.couple-row .person-alt,
-  .people-row.couple-row .card-action{
-    grid-column:auto;
-  }
-}
 
-.person-card,
-.person-name,
-.person-relation,
-.person-alt{
-  overflow-wrap:anywhere;
-  word-break:normal;
-}
+  .mobile-person.m{
+    background:var(--male);
+  }
 
-@media(min-width:1201px){
-  body{
-    overflow-x:auto;
+  .mobile-person.f{
+    background:var(--female);
   }
-  main{
-    width:max-content;
-    min-width:100%;
+
+  .mobile-avatar{
+    width:48px;
+    height:48px;
+    border-radius:10px;
+    border:1px solid #cbd2dc;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.45rem;
+    overflow:hidden;
   }
+
+  .mobile-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .mobile-person-name{
+    font-size:.96rem;
+    line-height:1.15;
+    font-weight:900;
+    overflow-wrap:anywhere;
+  }
+
+  .mobile-person-dates{
+    margin-top:3px;
+    font-size:.76rem;
+    font-weight:800;
+    color:#39445a;
+  }
+
+  .mobile-person-relation{
+    margin-top:3px;
+    font-size:.75rem;
+    color:#5f6b7d;
+  }
+
+  .mobile-person-action{
+    margin-top:4px;
+    font-size:.68rem;
+    color:#304a9c;
+    font-weight:900;
+  }
+
+  .mobile-descendants{
+    margin-top:13px;
+    margin-left:15px;
+    padding-left:14px;
+    border-left:3px solid #c6ced9;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .mobile-child{
+    position:relative;
+  }
+
+  .mobile-child::before{
+    content:"";
+    position:absolute;
+    left:-14px;
+    top:28px;
+    width:12px;
+    border-top:3px solid #c6ced9;
+  }
+
+  .mobile-branch-label{
+    font-size:.72rem;
+    font-weight:900;
+    color:#5d687b;
+    margin-bottom:6px;
+  }
+
+  .mobile-alt{
+    grid-column:2;
+    font-size:.69rem;
+    color:#697386;
+    line-height:1.2;
+    margin-top:-3px;
+  }
+
   .add-missing{
-    width:100vw;
-    max-width:1280px;
+    padding:18px 12px 36px;
+  }
+
+  .add-card{
+    padding:22px 16px;
+    border-radius:18px;
+  }
+
+  .add-card h2{
+    font-size:1.35rem;
+  }
+
+  .person-modal-card,
+  .form-card{
+    margin:10px auto;
+    padding:20px 16px;
+    border-radius:18px;
+  }
+
+  .person-modal-head{
+    align-items:flex-start;
+  }
+
+  .modal-photo{
+    width:66px;
+    height:66px;
+    flex-basis:66px;
+  }
+
+  .person-modal-head h2{
+    font-size:1.35rem;
+  }
+
+  .info-grid,
+  .action-grid,
+  .two-col{
+    grid-template-columns:1fr;
+  }
+
+  .action-button{
+    min-height:52px;
+    font-size:.95rem;
+  }
+
+  .prepare-email{
+    min-height:52px;
   }
 }
 
-
-/* v7.3 final containment pass:
-   the white "paper" follows the actual rendered family tree size. */
-@media(min-width:1201px){
-  .tree-section{
-    padding-left:20px;
-    padding-right:20px;
+@media(max-width:430px){
+  .mobile-couple{
+    gap:5px;
   }
 
-  .tree-wrap{
-    box-sizing:border-box;
+  .mobile-person{
+    grid-template-columns:42px 1fr;
+    padding:8px;
+    gap:7px;
   }
 
-  #treeRoot{
-    box-sizing:border-box;
+  .mobile-avatar{
+    width:40px;
+    height:40px;
+    font-size:1.2rem;
   }
 
-  #treeRoot > .family-unit{
-    margin-left:auto;
-    margin-right:auto;
+  .mobile-person-name{
+    font-size:.89rem;
+  }
+
+  .mobile-person-relation{
+    font-size:.7rem;
+  }
+
+  .mobile-person-action{
+    font-size:.64rem;
+  }
+
+  .mobile-alt{
+    font-size:.65rem;
+  }
+
+  .mobile-descendants{
+    margin-left:10px;
+    padding-left:12px;
+  }
+
+  .mobile-child::before{
+    left:-12px;
+    width:10px;
   }
 }
+
