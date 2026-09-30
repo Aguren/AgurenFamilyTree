@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Balkov / Zerzil Family Tree</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="language">
+      <div class="language-label" data-i18n="choose_language">Choose language</div>
+      <div class="language-buttons">
+        <button class="lang active" data-lang="en">English</button>
+        <button class="lang" data-lang="bg">Български</button>
+        <button class="lang" data-lang="tr">Türkçe</button>
+      </div>
+    </div>
+
+    <div class="intro">
+      <div class="tree-emoji">🌳</div>
+      <h1 data-i18n="title">Our Family Tree</h1>
+      <p data-i18n="intro">Choose a side of the family. Tap any person to add information, relatives, or photos.</p>
+    </div>
+
+    <div class="family-tabs">
+      <button class="family-tab active" data-tree="paternal">
+        <span class="tab-emoji">👨‍👩‍👧‍👦</span>
+        <span><strong data-i18n="fathers_family">Father's Family</strong><small>Balkov / Byalkov / Akgül</small></span>
+      </button>
+      <button class="family-tab" data-tree="maternal">
+        <span class="tab-emoji">👪</span>
+        <span><strong data-i18n="mothers_family">Mother's Family</strong><small>Zerzil</small></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="tree-section">
+      <div class="tree-title-row">
+        <div>
+          <div class="eyebrow" id="sideLabel">Father's side</div>
+          <h2 id="treeTitle">Balkov / Byalkov / Akgül</h2>
+          <p data-i18n="tap_person">Tap any person to view or add information.</p>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="treeWrap">
+        <svg class="tree-lines" id="treeLines" aria-hidden="true"></svg>
+        <div id="treeRoot"></div>
+      </div>
+    </section>
+
+    <section class="add-missing">
+      <div class="add-card">
+        <div class="add-icon">➕</div>
+        <h2 data-i18n="add_family">Add a missing family member</h2>
+        <p data-i18n="add_family_help">Can't find someone? Add them to the tree.</p>
+        <button id="addMissing" data-i18n="add_person">Add Person</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal hidden" id="personModal">
+    <div class="backdrop" data-person-close></div>
+    <div class="person-modal-card">
+      <button class="close-x" data-person-close>×</button>
+      <div id="personDetails"></div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="formModal">
+    <div class="backdrop" data-form-close></div>
+    <div class="form-card">
+      <button class="close-x" data-form-close>×</button>
+      <h2 data-i18n="form_title">Send family information</h2>
+      <p class="form-explain" data-i18n="form_explain">Only fill in what you know. The email will open ready to send to Aguren.</p>
+
+      <form id="familyForm">
+        <input type="hidden" name="action">
+
+        <label>
+          <span data-i18n="about">This update is about</span>
+          <input name="about" readonly>
+        </label>
+
+        <label>
+          <span data-i18n="full_name">Name to add / correct</span>
+          <input name="name">
+        </label>
+
+        <label>
+          <span data-i18n="relationship">Relationship</span>
+          <input name="relationship">
+        </label>
+
+        <div class="two-col">
+          <label><span data-i18n="birth">Birth date / year</span><input name="birth"></label>
+          <label><span data-i18n="death">Death date / year</span><input name="death"></label>
+        </div>
+
+        <label><span data-i18n="location">Location</span><input name="location"></label>
+
+        <label>
+          <span data-i18n="notes">Story, correction, or other information</span>
+          <textarea name="notes" rows="4"></textarea>
+        </label>
+
+        <label>
+          <span data-i18n="photo_note">Photo / document description</span>
+          <textarea name="photo" rows="2"></textarea>
+          <small data-i18n="photo_help">After the email opens, attach the actual photo or document before sending.</small>
+        </label>
+
+        <label><span data-i18n="submitter">Your name</span><input name="submitter"></label>
+
+        <button type="submit" class="prepare-email" data-i18n="prepare">Prepare Email to Aguren</button>
+        <p class="message" id="message"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="tree-data.js"></script>
+  <script src="translations.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

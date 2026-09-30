@@ -1,0 +1,49 @@
+# Responsive Traditional Family Tree — v7
+
+This version fixes the layout model used in v6.
+
+## Main changes
+- No fixed-position person cards.
+- No nested horizontal scrolling tree.
+- Desktop uses a traditional family-tree layout with dynamically drawn connector lines based on the actual browser layout.
+- Mobile switches to a vertical family hierarchy using the normal page scroll.
+- Every person card is clickable.
+- Clicking a person offers:
+  - Add/correct information
+  - Add a child
+  - Add spouse / partner
+  - Add a sibling
+  - Add a parent
+  - Send a photo / document
+- The selected person and relationship are prefilled in the email submission form.
+- A separate “Add a missing family member” button is provided.
+- Email destination: agurenbalkov@gmail.com
+- Birth/death dates display directly on cards whenever they are known.
+
+## Current known date/status
+- Fatma Akgül: born 1954
+- Isa (Atidje's brother): deceased, exact dates still unknown
+
+## Adding photos later
+Add a `photo` field to any person in `tree-data.js`, e.g.:
+
+`photo: "images/fatma.jpg"`
+
+Then create an `images` folder in the repository and add the image file there.
+
+
+## v7.1 formatting pass
+- Cards are now sized to keep each branch from collapsing into neighboring branches.
+- Descendant branches use their natural content width on desktop.
+- Traditional spouse/partner connector lines are drawn between paired cards.
+- At 1200px and below, the tree switches to the mobile/tablet hierarchy instead of trying to squeeze the desktop chart.
+- Mobile uses the normal browser page scroll, not an internal tree scroller.
+- Couple cards remain paired side-by-side when practical on small screens.
+
+
+## v7.2 family addition
+Aguren's immediate family is now included in both the paternal and maternal views:
+- Courtney Witherspoon-Balkov — wife
+- Athen Balkov — son
+
+Aguren and Courtney are shown as a couple with Athen connected beneath them.
