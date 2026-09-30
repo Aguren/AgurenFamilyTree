@@ -20,9 +20,19 @@
 
   const t = key => (window.TEXT[lang] && window.TEXT[lang][key]) || window.TEXT.en[key] || key;
   const phrase = value => {
-    if (!value || lang === "en") return value || "";
+    if (!value) return "";
+    if (typeof value === "object") {
+      return value[lang] || value.en || "";
+    }
+    if (lang === "en") return value;
     const d = (window.PHRASES && window.PHRASES[lang]) || {};
     return d[value] || value;
+  };
+
+  const localize = value => {
+    if (!value) return "";
+    if (typeof value === "object") return value[lang] || value.en || "";
+    return phrase(value);
   };
 
   function applyLanguage() {
@@ -58,7 +68,12 @@
       <div class="person-name">${escapeHtml(p.name)}</div>
       ${getDates(p) ? `<div class="person-dates">${escapeHtml(getDates(p))}</div>` : ""}
       <div class="person-relation">${escapeHtml(t(p.relation))}</div>
-      ${p.alt ? `<div class="person-alt">${escapeHtml(phrase(p.alt))}</div>` : ""}
+      ${p.alt ? `<div class="person-alt">${escapeHtml(localize(p.alt))}</div>` : ""}
+      ${p.highlights && p.highlights.length ? `
+        <div class="history-preview">
+          ${p.highlights.slice(0,3).map(h => `<div class="history-line">• ${escapeHtml(localize(h))}</div>`).join("")}
+          ${p.highlights.length > 3 ? `<div class="history-more">+ ${p.highlights.length - 3} ${escapeHtml(t("more_notes"))}</div>` : ""}
+        </div>` : ""}
       <div class="card-action">＋ ${escapeHtml(t("details"))}</div>
     `;
     btn.addEventListener("click", () => openPerson(personId));
@@ -126,7 +141,12 @@
         <div class="mobile-person-relation">${escapeHtml(t(p.relation))}</div>
         <div class="mobile-person-action">＋ ${escapeHtml(t("details"))}</div>
       </div>
-      ${p.alt ? `<div class="mobile-alt">${escapeHtml(phrase(p.alt))}</div>` : ""}
+      ${p.alt ? `<div class="mobile-alt">${escapeHtml(localize(p.alt))}</div>` : ""}
+      ${p.highlights && p.highlights.length ? `
+        <div class="mobile-history">
+          ${p.highlights.slice(0,2).map(h => `<div>• ${escapeHtml(localize(h))}</div>`).join("")}
+          ${p.highlights.length > 2 ? `<div class="mobile-history-more">+ ${p.highlights.length - 2} ${escapeHtml(t("more_notes"))}</div>` : ""}
+        </div>` : ""}
     `;
     btn.addEventListener("click", () => openPerson(personId));
     return btn;
@@ -257,8 +277,24 @@
         ${p.birth ? `<div class="info-box"><strong>${escapeHtml(t("born"))}</strong>${escapeHtml(p.birth)}</div>` : ""}
         ${p.death ? `<div class="info-box"><strong>${escapeHtml(t("died"))}</strong>${escapeHtml(p.death)}</div>` : ""}
         ${p.deceased && !p.death ? `<div class="info-box"><strong>${escapeHtml(t("died"))}</strong>${escapeHtml(t("deceased"))}</div>` : ""}
-        ${p.alt ? `<div class="info-box"><strong>${escapeHtml(t("other_name"))}</strong>${escapeHtml(phrase(p.alt))}</div>` : ""}
+        ${p.alt ? `<div class="info-box"><strong>${escapeHtml(t("other_name"))}</strong>${escapeHtml(localize(p.alt))}</div>` : ""}
       </div>
+
+      ${p.highlights && p.highlights.length ? `
+        <div class="research-section">
+          <div class="research-title">${escapeHtml(t("family_history"))}</div>
+          <ul class="research-list">
+            ${p.highlights.map(h => `<li>${escapeHtml(localize(h))}</li>`).join("")}
+          </ul>
+        </div>` : ""}
+
+      ${p.sources && p.sources.length ? `
+        <div class="research-section">
+          <div class="research-title">${escapeHtml(t("research_sources"))}</div>
+          <div class="source-links">
+            ${p.sources.map(s => `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.label)}</a>`).join("")}
+          </div>
+        </div>` : ""}
 
       <div class="action-title">${escapeHtml(t("what_do"))}</div>
       <div class="action-grid">
@@ -319,7 +355,7 @@
       familyForm.elements.relationship.value = t(person.relation);
       familyForm.elements.birth.value = person.birth || "";
       familyForm.elements.death.value = person.death || "";
-      familyForm.elements.notes.value = person.alt ? phrase(person.alt) : "";
+      familyForm.elements.notes.value = person.alt ? localize(person.alt) : "";
     } else if (person) {
       familyForm.elements.relationship.value = relationshipPrefill(action, person.name);
     }

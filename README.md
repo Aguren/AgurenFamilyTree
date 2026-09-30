@@ -81,3 +81,31 @@ Phone/tablet:
 - every person opens the same add/correct/relative/photo actions
 
 The underlying family data remains in `tree-data.js`, so edits update both desktop and mobile views automatically.
+
+
+## v7.5 research enrichment
+Family cards now include compact family-history/research notes directly inside the card.
+Tapping a person opens the complete set of notes plus clickable research-source links when available.
+
+Key additions include:
+- Assan / Hasan Balkov:
+  - Communist-era name Assen Petrov Nikolov / Assen Nikolov
+  - 2018 public name-restoration/change notice to Assan Isa Balkov
+  - Muslim Strike Committee / 1989 organizing history
+  - detention-until-Sept.-4-1989 research note
+  - visa assistance to roughly 32 Pomak families
+  - family identification in Dec. 29, 1989 Sofia footage
+- Atidje Balkova:
+  - Delka Iossifova Nikolova / Delka Nikolova
+  - 2018 public name-restoration/change notice to Atidje Osmanova Balkova
+  - Kornitsa / Zerzil parents
+- Osman (paternal uncle):
+  - Akgül migration branch
+  - scholarly note that Hasan's older brother's family reached Turkey in Sept. 1989
+- Fatma Akgül:
+  - born 1954, Dolno Izvorovo
+  - identified in migration research as Hasan's older sister and a source
+- Maternal Zerzil branch:
+  - public-record notes for Isa Osman Zerzil
+  - likely public-record matches for Aifer Isa Zerzil and Osman Isa Zerzil
+  - clearly labeled unconfirmed Osman Isa Zerzil lead for grandfather Osman

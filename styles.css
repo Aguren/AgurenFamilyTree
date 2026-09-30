@@ -476,3 +476,85 @@ label small{display:block;color:var(--muted);font-weight:500;margin-top:5px}
   }
 }
 
+
+
+/* Research/history details shown directly on person cards */
+.history-preview{
+  margin-top:8px;
+  padding-top:7px;
+  border-top:1px solid rgba(70,82,102,.16);
+  text-align:left;
+  font-size:.66rem;
+  line-height:1.24;
+  color:#465168;
+}
+
+.history-line{
+  margin-top:4px;
+}
+
+.history-more{
+  margin-top:5px;
+  color:#304a9c;
+  font-weight:900;
+}
+
+.research-section{
+  margin-top:16px;
+  padding:14px;
+  border-radius:13px;
+  background:#f7f8fa;
+  border:1px solid #e1e5eb;
+}
+
+.research-title{
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.research-list{
+  margin:0;
+  padding-left:19px;
+}
+
+.research-list li{
+  margin:7px 0;
+  line-height:1.4;
+}
+
+.source-links{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.source-links a{
+  color:#284fbe;
+  font-weight:750;
+  text-decoration:none;
+}
+
+.source-links a:hover{
+  text-decoration:underline;
+}
+
+@media(max-width:900px){
+  .mobile-history{
+    grid-column:1 / -1;
+    margin-top:2px;
+    padding-top:7px;
+    border-top:1px solid rgba(70,82,102,.15);
+    font-size:.69rem;
+    color:#465168;
+    line-height:1.25;
+  }
+
+  .mobile-history > div{
+    margin-top:3px;
+  }
+
+  .mobile-history-more{
+    color:#304a9c;
+    font-weight:900;
+  }
+}
